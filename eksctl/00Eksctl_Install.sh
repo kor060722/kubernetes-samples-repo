@@ -4,3 +4,7 @@ sudo mv /tmp/eksctl /usr/bin/
 echo "--------"
 eksctl version
 echo "--------"
+
+# Reference Site 
+#      ↓↓↓
+# https://docs.aws.amazon.com/ko_kr/emr/latest/EMR-on-EKS-DevelopmentGuide/setting-up-eksctl.html#setting-up-eksctl-linux 
