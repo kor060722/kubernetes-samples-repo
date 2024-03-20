@@ -1,13 +1,17 @@
 eksctl 관련 자료들
 
-kind: ClusterConfig		string
-apiVersion: eksctl.io/v1alpha5		string
-metadata:	contains general cluster information	
-name:	of the cluster	string
-region:	the AWS region hosting this cluster	string
-version: 1.29	Valid variants are: "1.23", "1.24", "1.25", "1.26", "1.27", "1.28", "1.29" (default).	string
-tags: {}	used to tag AWS resources created by eksctl	object
-annotations: {}	arbitrary metadata ignored by eksctl.	object
+kind:               ClusterConfig		                              string
+
+apiVersion:         eksctl.io/v1alpha5		                        string
+
+metadata:	          contains general cluster information	
+    name:	          of the cluster	                              string
+    region:	        the AWS region hosting this cluster           string   
+    version:	      Valid variants are: "1.23", "1.24",           string
+                    "1.25", "1.26", "1.27", "1.28", "1.29" 
+                    (default).
+    tags: {}	used to tag AWS resources created by eksctl	object
+    annotations: {}	arbitrary metadata ignored by eksctl.	object
 kubernetesNetworkConfig:	contains cluster networking options	
 ipFamily: IPv4	Valid variants are: "IPv4" defines an IP family of v4 to be used when creating a new VPC and cluster., "IPv6" defines an IP family of v6 to be used when creating a new VPC and cluster..	string
 serviceIPv4CIDR:	CIDR range from where ClusterIPs are assigned	string
