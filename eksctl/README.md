@@ -5,9 +5,7 @@ eksctl version
 kubectl get svc --all-namespaces 
 
 # Cluster
-```
-eksctl create cluster -f "<CLUSTER_YAML>" # If it is created when using "--dry-run", you can first check how it is configured.
-```
+``` eksctl create cluster -f "<CLUSTER_YAML>" # If it is created when using "--dry-run", you can first check how it is configured. ```
 
 
 # NodeGroup
