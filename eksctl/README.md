@@ -5,7 +5,9 @@ eksctl version
 eksctl create cluster -f "<CLUSTER_YAML>"
 
 # NodeGroup
+```
 eksctl create nodegroup
+```
 ```
 eksctl create nodegroup \
   --cluster my-cluster \
