@@ -3,7 +3,7 @@ eksctl version
 
 # Cluster
 eksctl create cluster -f "<CLUSTER_YAML>"
-
+---
 # NodeGroup
 ```
 eksctl create nodegroup
