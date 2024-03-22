@@ -1,4 +1,4 @@
-``` # Create ``` 
+# Create
 ```
 eksctl create nodegroup
 eksctl create fargateprofile
