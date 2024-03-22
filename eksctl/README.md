@@ -1,9 +1,10 @@
 # Create
-```eksctl create nodegroup```
-
-```eksctl create fargateprofile```
-```eksctl create iamserviceaccount```
-```eksctl create iamidentitymapping```
+```
+eksctl create nodegroup
+eksctl create fargateprofile
+eksctl create iamserviceaccount
+eksctl create iamidentitymapping
+```
 
 # Get
 ```eksctl get clusters/cluster```
