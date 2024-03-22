@@ -1,0 +1,14 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: basic-cluster
+  region: eu-north-1
+
+outpost:
+  # Required.
+  controlPlaneOutpostARN: "arn:aws:outposts:us-west-2:1234:outpost/op-1234"
+  # Optional, defaults to the smallest available instance type on the Outpost.
+  controlPlaneInstanceType: m5d.large
+  controlPlanePlacement:
+    groupName: placement-group-name
