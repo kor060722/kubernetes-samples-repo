@@ -5,3 +5,5 @@ sudo mv ./kubectl /usr/bin/
 echo "--------------------------------------------------------"
 kubectl version --client
 echo "--------------------------------------------------------"
+
+# Reference Site -> https://docs.aws.amazon.com/ko_kr/eks/latest/userguide/install-kubectl.html
