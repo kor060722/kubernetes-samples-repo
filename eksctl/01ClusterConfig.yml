@@ -9,26 +9,16 @@ metadata:
     karpenter.sh/discovery: cluster-with-karpenter
 
 vpc:
-  id: vpc-0c24b1cc77da8f463
-  cidr: "192.168.0.0/16"
+  id: vpc-11111
   subnets:
     public:
-      public-one:
-        id: subnet-0324095a4f2188967
-        # az: us-west-2a # any unambiguous combination of these is allowed
-        # cidr: 192.168.64.0/19
-      public-two:
-        id: subnet-083814b087bad140b
-      public-three:
-        id: subnet-03a1260affe6f9944
+      public-a: { id: subnet-02b8b9cc5edb14389 }
+      public-b: { id: subnet-0f61a5ad20c9635d9 }
     private:
-      private-one:
-        cidr: "192.168.160.0/19"
-      private-two:
-        id: subnet-00110ffa3ef259d0c
-      private-three:
-        id: subnet-0a96e24163ef2c9c3
+      private-a: { id: subnet-0accb01da26f60f53 }
+      private-b: { id: subnet-07c980d138dffe4ec }
 
+      
 outpost:
   # Required.
   controlPlaneOutpostARN: "arn:aws:outposts:us-west-2:1234:outpost/op-1234"
