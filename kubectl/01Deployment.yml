@@ -2,30 +2,30 @@ apiVersion: apps/v1
 kind: Deployment
 
 metadata:
-  name: frontend-deployment
+  name: warm-deploy
   namespace: skills
   labels:
-    app: frontend
+    app: warm
 
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: frontend
+      app: warm
   template:
     metadata:
       labels:
-        app: frontend
+        app: warm
     spec:
       containers:
-        - name: frontend-container
-          image: 073762821266.dkr.ecr.ap-northeast-2.amazonaws.com/frontend-repo:latest
+        - name: warm-container
+          image: nginx
           imagePullPolicy: Always
           resources:
             requests:
-              cpu: 820m
-              memory: 1000Mi
+              cpu: 500m
+              memory: 500Mi
             limits:
-              cpu: 820m
+              cpu: 1000m
               memory: 1000Mi
       restartPolicy: Always
