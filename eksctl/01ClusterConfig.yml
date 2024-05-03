@@ -2,117 +2,129 @@ apiVersion: eksctl.io/v1alpha5
 kind: ClusterConfig
 
 metadata:
-  name: cluster-with-karpenter
-  region: us-west-2
-  version: '1.21'
-  tags:
-    karpenter.sh/discovery: cluster-with-karpenter
+  name: lee-samples-cluster
+  region: ap-northeast-2
+  version: "1.29"
+  # tags:
+  #   karpenter.sh/discovery: cluster-with-karpenter
 
 vpc:
-  id: vpc-11111
+  id: vpc-000000000000
   subnets:
     public:
-      public-a: { id: subnet-02b8b9cc5edb14389 }
-      public-b: { id: subnet-0f61a5ad20c9635d9 }
+      public-a: { id: subnet-11111111111111111 }
+      public-b: { id: subnet-22222222222222222 }
     private:
-      private-a: { id: subnet-0accb01da26f60f53 }
-      private-b: { id: subnet-07c980d138dffe4ec }
-
+      private-a: { id: subnet-3333333333333333 }
+      private-b: { id: subnet-4444444444444444 }
       
-outpost:
-  # Required.
-  controlPlaneOutpostARN: "arn:aws:outposts:us-west-2:1234:outpost/op-1234"
-  # Optional, defaults to the smallest available instance type on the Outpost.
-  controlPlaneInstanceType: m5d.large
-  controlPlanePlacement:
-    groupName: placement-group-name
+# outpost:
+#   # Required.
+#   controlPlaneOutpostARN: "arn:aws:outposts:us-west-2:1234:outpost/op-1234"
+#   # Optional, defaults to the smallest available instance type on the Outpost.
+#   controlPlaneInstanceType: m5d.large
+#   controlPlanePlacement:
+#     groupName: placement-group-name
 
-kubernetesNetworkConfig:
-  ipFamily: IPv6
+# kubernetesNetworkConfig:
+#   ipFamily: IPv6
 
-addons:
-  - name: vpc-cni
-    version: latest
-  - name: coredns
-    version: latest
-  - name: kube-proxy
-    version: latest
+# addons:
+#   - name: vpc-cni
+#     version: latest
+#   - name: coredns
+#     version: latest
+#   - name: kube-proxy
+#     version: latest
+
 iam:
   withOIDC: true
-  serviceRolePermissionsBoundary: "arn:aws:iam:11111:policy/entity/boundary"
-  fargatePodExecutionRolePermissionsBoundary: "arn:aws:iam::11111:policy/entity/boundary"
+  # serviceRolePermissionsBoundary: "arn:aws:iam:11111:policy/entity/boundary"
+  # fargatePodExecutionRolePermissionsBoundary: "arn:aws:iam::11111:policy/entity/boundary"
   serviceAccounts:
     - metadata:
         name: s3-reader
-      attachPolicyARNs:
-      - "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
-      permissionsBoundary: "arn:aws:iam::11111:policy/entity/boundary"
+        # namespace:
+      # attachPolicyARNs:
+      # - "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+      # permissionsBoundary: "arn:aws:iam::11111:policy/entity/boundary"
+      wellKnownPolicies:
+        awsLoadBalancerController: true
 
 managedNodeGroups:
   - name: mng-1
+    labels: { app: nga }
+    instanceType: t3.small
+    instanceName: warm-app-node
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 20
+    privateNetworking: true
+    volumeType: gp2
+    volumeEncrypted: true
+    iam:
+      withAddonPolicies:
+        imageBuilder: true
+        awsLoadBalancerController: true
+        autoScaler: true
 
-  
-karpenter:
-  version: '0.15.0'
-  createServiceAccount: true # default is false
+# karpenter:
+#   version: '0.15.0'
+#   createServiceAccount: true # default is false
 
+  # identityProviders:
+  # - name: cognito-user-pool-1
+  #   issuerURL: https://cognito-idp.us-west-2.amazonaws.com/us-west-2_Ur78RxTra
+  #   clientID: 10basodnbu3gs9b1bf9r566btu
+  #   usernameClaim: email
+  #   type: oidc
 
-  identityProviders:
-  - name: cognito-user-pool-1
-    issuerURL: https://cognito-idp.us-west-2.amazonaws.com/us-west-2_Ur78RxTra
-    clientID: 10basodnbu3gs9b1bf9r566btu
-    usernameClaim: email
-    type: oidc
+# addons:
+# - name: vpc-cni # no version is specified so it deploys the default version
+#   attachPolicyARNs:
+#     - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+# - name: coredns
+#   version: latest # auto discovers the latest available
+# - name: kube-proxy
+#   version: latest
 
+# secretsEncryption:
+#   # ARN of the KMS key
+#   keyARN: "arn:aws:kms:us-west-2:000000000000:key/00000000-0000-0000-0000-000000000000"
 
+# fargateProfiles:
+#   - name: fp-default
+#     selectors:
+#       # All workloads in the "default" Kubernetes namespace will be
+#       # scheduled onto Fargate:
+#       - namespace: default
+#       # All workloads in the "kube-system" Kubernetes namespace will be
+#       # scheduled onto Fargate:
+#       - namespace: kube-system
+#   - name: fp-dev
+#     selectors:
+#       # All workloads in the "dev" Kubernetes namespace matching the following
+#       # label selectors will be scheduled onto Fargate:
+#       - namespace: dev
+#         labels:
+#           env: dev
+#           checks: passed
+#     tags:
+#       env: dev
+#       name: fp-dev
 
-addons:
-- name: vpc-cni # no version is specified so it deploys the default version
-  attachPolicyARNs:
-    - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
-- name: coredns
-  version: latest # auto discovers the latest available
-- name: kube-proxy
-  version: latest
-
-
-secretsEncryption:
-  # ARN of the KMS key
-  keyARN: "arn:aws:kms:us-west-2:000000000000:key/00000000-0000-0000-0000-000000000000"
-
-fargateProfiles:
-  - name: fp-default
-    selectors:
-      # All workloads in the "default" Kubernetes namespace will be
-      # scheduled onto Fargate:
-      - namespace: default
-      # All workloads in the "kube-system" Kubernetes namespace will be
-      # scheduled onto Fargate:
-      - namespace: kube-system
-  - name: fp-dev
-    selectors:
-      # All workloads in the "dev" Kubernetes namespace matching the following
-      # label selectors will be scheduled onto Fargate:
-      - namespace: dev
-        labels:
-          env: dev
-          checks: passed
-    tags:
-      env: dev
-      name: fp-dev
-
-gitops:
-  flux:
-    gitProvider: github             # required. options are github or gitlab
-    flags:                          # required. arbitrary map[string]string for all flux args.
-    # these args are not controlled by eksctl. see https://fluxcd.io/docs/get-started/ for all available flags
-      owner: "dr-who"
-      repository: "our-org-gitops-repo"
-      private: "true"
-      branch: "main"
-      namespace: "flux-system"
-      path: "clusters/cluster-12"
-      team: "team1,team2"
+# gitops:
+#   flux:
+#     gitProvider: github             # required. options are github or gitlab
+#     flags:                          # required. arbitrary map[string]string for all flux args.
+#     # these args are not controlled by eksctl. see https://fluxcd.io/docs/get-started/ for all available flags
+#       owner: "dr-who"
+#       repository: "our-org-gitops-repo"
+#       private: "true"
+#       branch: "main"
+#       namespace: "flux-system"
+#       path: "clusters/cluster-12"
+#       team: "team1,team2"
 
 
 
